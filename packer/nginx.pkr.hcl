@@ -22,7 +22,7 @@ source "yandex" "nginx" {
   source_image_family = "ubuntu-2204-lts"
   ssh_username        = "ubuntu"
   use_ipv4_nat        = "true"
-  image_description   = "WTF image"
+  image_description   = "Nginx test image"
   image_family        = "ubuntu-2204-lts"
   image_name          = "nginx-${var.image_tag}"
   subnet_id           = "${var.YC_SUBNET_ID}"
