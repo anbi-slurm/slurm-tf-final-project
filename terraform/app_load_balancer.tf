@@ -44,18 +44,12 @@ resource "yandex_alb_load_balancer" "this" {
   network_id = yandex_vpc_network.this.id
 
   allocation_policy {
-    # fuck knows how to make a cycle here
-    location {
-        zone_id   = var.az[0]
-        subnet_id = yandex_vpc_subnet.this[var.az[0]].id
-    }
-    location {
-        zone_id   = var.az[1]
-        subnet_id = yandex_vpc_subnet.this[var.az[1]].id
-    }
-    location {
-        zone_id   = var.az[2]
-        subnet_id = yandex_vpc_subnet.this[var.az[2]].id
+    dynamic "location" {
+      for_each = toset(var.az)
+      content {
+        zone_id = location.value
+        subnet_id = yandex_vpc_subnet.this[location.value].id 
+      }
     }
   }
 
