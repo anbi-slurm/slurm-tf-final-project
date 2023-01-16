@@ -47,7 +47,7 @@ resource "yandex_alb_load_balancer" "this" {
     dynamic "location" {
       for_each = toset(var.az)
       content {
-        zone_id = location.value
+        zone_id   = location.value
         subnet_id = yandex_vpc_subnet.this[location.value].id 
       }
     }
